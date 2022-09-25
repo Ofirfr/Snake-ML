@@ -17,9 +17,9 @@ class Fruits:
         return rnd.randint(5, 15)
 
     # Updates fruit system, should be ran for every new frame
-    def new_frame(self,snake_body):
+    def new_frame(self,snake_body_parts):
         if (self.fruit_ticker == 0 and not self.fruit_exists):
-            self.new_fruit(snake_body)
+            self.new_fruit(snake_body_parts)
             return
         self.fruit_ticker -= 1
 
@@ -30,7 +30,7 @@ class Fruits:
 
     def new_fruit(self, snake_body):
         found_fruit_location = False
-        from snake.Snake import BODY_PART_SIZE, HEIGHT, WIDTH
+        from snake.Game import BODY_PART_SIZE, HEIGHT, WIDTH
         while (not found_fruit_location):
             test_location_x, test_location_y = rnd.randint(
                 0, WIDTH/BODY_PART_SIZE-1)*BODY_PART_SIZE, rnd.randint(0, HEIGHT/BODY_PART_SIZE-1)*BODY_PART_SIZE
