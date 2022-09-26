@@ -31,35 +31,11 @@ class Game:
                         self.snake_body.go_right()
             self.draw_game()
             self.snake_body.update_body()
-            self.update_fruit_eaten()
-            if (self.collisions_found()):
+            self.fruit_system.submit_body(self.snake_body)
+            if (self.snake_body.collisions_found()):
                 run = False
-                print("Collision found!")
-            self.fruit_system.new_frame(self.snake_body.body_parts)
+                print("Game Over - Collision found!")
         pg.quit()
-
-    def collisions_found(self):
-        head = self.snake_body.body_parts[-1]
-        # Check if body part got out of bounds
-        if (head[0] > WIDTH-BODY_PART_SIZE or head[0] < 0 or head[1] > HEIGHT-BODY_PART_SIZE or head[1] < 0):
-            print("Out of bounds!")
-            print("Head was at ", head)
-            return True
-        # Check if body part got over another body part
-        counted_parts = set()
-        for part in self.snake_body.body_parts:
-            if part in counted_parts:
-                print("Body parts collision")
-                return True
-            counted_parts.add(part)
-        return False
-
-    def update_fruit_eaten(self):
-        head = self.snake_body.body_parts[-1]
-        if (head[0], head[1]) == self.fruit_system.current_fruit_location:
-            self.fruit_eaten = True
-            self.snake_body.fruit_eaten = True
-            self.fruit_system.fruit_eaten()
 
     def draw_game(self):
         WIN.fill(BACKGROUND_COLOR)

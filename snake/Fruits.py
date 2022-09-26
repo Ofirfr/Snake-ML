@@ -13,6 +13,11 @@ class Fruits:
     fruit_exists = False
     current_fruit_location = NO_FRUIT_LOCATION
 
+    def __init__(self):
+        self.fruit_ticker = rnd.randint(5,15)
+        self.fruit_exists = False
+        self.current_fruit_location = NO_FRUIT_LOCATION
+
     def new_ticker(self):
         return rnd.randint(5, 15)
 
@@ -22,6 +27,13 @@ class Fruits:
             self.new_fruit(snake_body_parts)
             return
         self.fruit_ticker -= 1
+    
+    def submit_body(self,snake_body):
+        self.new_frame(snake_body.body_parts)
+        head = snake_body.body_parts[-1]
+        if (head[0], head[1]) == self.current_fruit_location:
+            snake_body.fruit_eaten = True
+            self.fruit_eaten()
 
     def fruit_eaten(self):
         self.fruit_ticker = self.new_ticker()
