@@ -1,8 +1,8 @@
 from snake.Direction import Direction
 
 MAX_STEPS = 200
-OUT_OF_BOUNDS = -1
-BODY_PART_COLLISION = 0
+OUT_OF_BOUNDS = -100
+BODY_PART_COLLISION = -100
 TOO_MANY_STEPS = -500
 REWARD_PER_STEP = 1
 
@@ -11,7 +11,7 @@ class Body:
 
     def __init__(self):
         # body is list of pixels of the body, from tail to head
-        self.body_parts = [(224, 256), (240, 256), (256, 256)]
+        self.body_parts = [(196, 256),(208, 256),(224, 256), (240, 256), (256, 256)]
         self.direction = Direction.up
         self.remaining_steps = MAX_STEPS
         self.fruit_eaten = False

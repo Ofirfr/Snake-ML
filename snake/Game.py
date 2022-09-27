@@ -17,6 +17,7 @@ class Game:
     def __init__(self):
         self.snake_body = Body()
         self.fruit_system = Fruits()
+        self.total_points = 0
 
         clock = pg.time.Clock()
         run = True
@@ -33,9 +34,12 @@ class Game:
             self.draw_game()
             self.snake_body.update_body()
             self.fruit_system.submit_body(self.snake_body)
-            if (self.snake_body.calc_reward() < 0):
+            reward = self.snake_body.calc_reward()
+            self.total_points += reward
+            if (reward < 0):
                 run = False
                 print("Game Over - Collision found!")
+                print("Total points:"+str(self.total_points))
         pg.quit()
 
     def draw_game(self):

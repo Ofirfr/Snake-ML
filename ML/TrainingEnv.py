@@ -1,12 +1,14 @@
-import re
 from snake.Body import Body
 from snake.Fruits import NO_FRUIT_LOCATION, Fruits
-import pygame as pg
 import gym
 from gym.spaces import Box
 import numpy as np
 
+from snake.Game import BODY_PART_SIZE
+
 REWARD_PER_FRUIT = 10
+BODY_INDICATOR = 1
+FRUIT_INDICATOR = 2
 
 
 class TrainingEnv(gym.Env):
@@ -23,9 +25,10 @@ class TrainingEnv(gym.Env):
 
     def step(self, action):
         # action 0 = dont change, 1 = left, -1 = right
-        if action == 1:
+        # print(action)
+        if action == 2:
             self.training_body.go_left()
-        if action == -1:
+        if action == 0:
             self.training_body.go_right()
         self.training_body.update_body()
         self.training_fruit_system.submit_body(self.training_body)
@@ -38,14 +41,15 @@ class TrainingEnv(gym.Env):
         return (self.get_state(), reward, False, {})
 
     def get_state(self):
-        state = []
+        from snake.Game import WIDTH
+        state = np.zeros((int(WIDTH/BODY_PART_SIZE+1),
+                         int(WIDTH/BODY_PART_SIZE+1)))
         for body_part in self.training_body.body_parts:
-            state.append(list(body_part))
-        state.insert(
-            0, list(self.training_fruit_system.current_fruit_location))
-        from ML.TrainingGym import NUM_OF_STATES
-        state = state + [NO_FRUIT_LOCATION] * (NUM_OF_STATES-len(state))
-        state = np.asarray(state)
+            state[int(body_part[0]/BODY_PART_SIZE),
+                  int(body_part[1]/BODY_PART_SIZE)] = BODY_INDICATOR
+        if (self.training_fruit_system.current_fruit_location != NO_FRUIT_LOCATION):
+            state[int(self.training_fruit_system.current_fruit_location[0]/BODY_PART_SIZE),
+                  int(self.training_fruit_system.current_fruit_location[1]/BODY_PART_SIZE)] = FRUIT_INDICATOR
         return state
 
     def reset(self):
@@ -55,22 +59,10 @@ class TrainingEnv(gym.Env):
         return self.get_state()
 
     def render(self, mode):
-        if self.training_body.calc_reward():
-            return
-        from snake.Game import HEIGHT, WIDTH, BODY_PART_SIZE, BODY_COLOR, FRUIT_COLOR
-        training_window = pg.display.set_mode((WIDTH, HEIGHT))
-        pixels = pg.PixelArray(training_window)
-        if (self.training_fruit_system.fruit_exists):
-            for x in range(1, BODY_PART_SIZE-1):
-                for y in range(1, BODY_PART_SIZE-1):
-                    pixels[self.training_fruit_system.current_fruit_location[0]+x,
-                           self.training_fruit_system.current_fruit_location[1]+y] = FRUIT_COLOR
-        for body_part in self.training_body.body_parts:
-            for x in range(1, BODY_PART_SIZE-1):
-                for y in range(1, BODY_PART_SIZE-1):
-                    pixels[body_part[0]+x, body_part[1]+y] = BODY_COLOR
-        pixels.close()
-        pg.display.update()
+        print("===============================================")
+        print(self.get_state())
+        print("===============================================")
+
 
     def close(self):
-        pg.quit()
+        return

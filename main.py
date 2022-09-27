@@ -1,6 +1,5 @@
 from ML.TrainingGym import TrainingGym
-from snake.Game import Game
-import tensorflow as tf
+# from snake.Game import Game
 
 def main():
     print("Welcome!")
