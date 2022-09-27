@@ -7,16 +7,17 @@ WIDTH, HEIGHT = 512, 512
 WIN = pg.display.set_mode((WIDTH, HEIGHT))
 BODY_COLOR = (255, 0, 0)
 BACKGROUND_COLOR = (0, 0, 0)
-BODY_PART_SIZE = 16
+BODY_PART_SIZE = 32
 FPS = 10
 pg.display.set_caption("Snake")
 
 
 class Game:
-    snake_body = Body()
-    fruit_system = Fruits()
 
     def __init__(self):
+        self.snake_body = Body()
+        self.fruit_system = Fruits()
+
         clock = pg.time.Clock()
         run = True
         while run:
@@ -32,7 +33,7 @@ class Game:
             self.draw_game()
             self.snake_body.update_body()
             self.fruit_system.submit_body(self.snake_body)
-            if (self.snake_body.collisions_found()):
+            if (self.snake_body.calc_reward() < 0):
                 run = False
                 print("Game Over - Collision found!")
         pg.quit()

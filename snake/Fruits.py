@@ -4,14 +4,10 @@ from random import Random
 
 
 FRUIT_COLOR = (0, 255, 0)
-NO_FRUIT_LOCATION = (-1, -1)
+NO_FRUIT_LOCATION = (-1000, -1000)
 
 rnd = Random()
 class Fruits:
-    
-    fruit_ticker = rnd.randint(5, 15)
-    fruit_exists = False
-    current_fruit_location = NO_FRUIT_LOCATION
 
     def __init__(self):
         self.fruit_ticker = rnd.randint(5,15)
