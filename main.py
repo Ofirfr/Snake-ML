@@ -1,5 +1,5 @@
 from ML.TrainingGym import TrainingGym
-# from snake.Game import Game
+from snake.Game import Game
 
 def main():
     print("Welcome!")

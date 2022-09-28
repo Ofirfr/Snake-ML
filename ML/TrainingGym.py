@@ -10,7 +10,7 @@ import math
 
 from snake.Game import BODY_PART_SIZE, WIDTH
 EPISODES = 5
-NUM_OF_STEPS = 30000
+NUM_OF_STEPS = 100000
 FILE_NAME = 'saved_agent.h5f'
 # State is (fruit_location),(tail),....,(head)
 NUM_OF_STATES = int(math.pow(WIDTH/BODY_PART_SIZE, 2))+1
