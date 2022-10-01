@@ -1,11 +1,12 @@
 import pygame as pg
 from snake.Body import Body
 
-from snake.Fruits import FRUIT_COLOR, NO_FRUIT_LOCATION, Fruits
+from snake.Fruits import FRUIT_COLOR, NO_FRUIT_LOCATION, REWARD_PER_FRUIT, Fruits
 from snake.Direction import Direction
 WIDTH, HEIGHT = 512, 512
 WIN = pg.display.set_mode((WIDTH, HEIGHT))
 BODY_COLOR = (255, 0, 0)
+HEAD_COLOR = (0,0,255)
 BACKGROUND_COLOR = (0, 0, 0)
 BODY_PART_SIZE = 32
 FPS = 10
@@ -35,6 +36,8 @@ class Game:
             self.snake_body.update_body()
             self.fruit_system.submit_body(self.snake_body)
             reward = self.snake_body.calc_reward()
+            if (self.snake_body.fruit_eaten == True):
+                reward += REWARD_PER_FRUIT
             self.total_points += reward
             if (reward < 0):
                 run = False
@@ -54,5 +57,9 @@ class Game:
             for x in range(1, BODY_PART_SIZE-1):
                 for y in range(1, BODY_PART_SIZE-1):
                     pixels[body_part[0]+x, body_part[1]+y] = BODY_COLOR
+        head = self.snake_body.body_parts[-1]
+        for x in range(1, BODY_PART_SIZE-1):
+                for y in range(1, BODY_PART_SIZE-1):
+                    pixels[head[0]+x, head[1]+y] = HEAD_COLOR
         pixels.close()
         pg.display.update()

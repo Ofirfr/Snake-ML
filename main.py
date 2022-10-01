@@ -5,7 +5,6 @@ def main():
     print("Welcome!")
     # Game()
     TrainingGym()
-    # print(tf.__version__)
 
 
 if __name__ == "__main__":

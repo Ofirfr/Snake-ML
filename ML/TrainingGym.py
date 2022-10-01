@@ -9,7 +9,7 @@ import numpy as np
 import math
 
 from snake.Game import BODY_PART_SIZE, WIDTH
-EPISODES = 5
+EPISODES = 50
 NUM_OF_STEPS = 1000000
 FILE_NAME = 'saved_agent.h5f'
 # State is (fruit_location),(tail),....,(head)
@@ -28,7 +28,7 @@ class TrainingGym:
         dqn.load_weights(FILE_NAME)
         dqn.fit(self.env, nb_steps=NUM_OF_STEPS, visualize=False, verbose=1)
 
-        scores = dqn.test(self.env, nb_episodes=EPISODES, visualize=False)
+        scores = dqn.test(self.env, nb_episodes=EPISODES, visualize=True)
         print(np.mean(scores.history['episode_reward']))
 
         self.save_agent(dqn)
@@ -44,13 +44,13 @@ class TrainingGym:
 
     def build_agent(self, model, actions):
         policy = BoltzmannQPolicy()
-        memory = SequentialMemory(limit=100000, window_length=1)
+        memory = SequentialMemory(limit=100000000, window_length=1)
         dqn = DQNAgent(model=model,
                        memory=memory,
                        policy=policy,
                        nb_actions=actions,
-                       nb_steps_warmup=100,
-                       target_model_update=1e-3)
+                       nb_steps_warmup=1000,
+                       target_model_update=0.00146)
         return dqn
 
     def save_agent(self, dqn):

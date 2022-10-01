@@ -5,6 +5,8 @@ from random import Random
 
 FRUIT_COLOR = (0, 255, 0)
 NO_FRUIT_LOCATION = (-1000, -1000)
+REWARD_PER_FRUIT = 200
+
 
 rnd = Random()
 class Fruits:

@@ -3,8 +3,8 @@ from snake.Direction import Direction
 MAX_STEPS = 200
 OUT_OF_BOUNDS = -200
 BODY_PART_COLLISION = -200
-TOO_MANY_STEPS = -500
-REWARD_PER_STEP = 1
+TOO_MANY_STEPS = -200
+REWARD_PER_STEP = 0
 
 
 class Body:
