@@ -68,23 +68,24 @@ class TrainingEnv(gym.Env):
         time.sleep(0.05)
         if self.training_body.calc_reward() < 0:
             return
-        WIN.fill(BACKGROUND_COLOR)
-        pixels = pg.PixelArray(WIN)
-        if (self.training_fruit_system.fruit_exists):
-            for x in range(1, BODY_PART_SIZE-1):
-                for y in range(1, BODY_PART_SIZE-1):
-                    pixels[self.training_fruit_system.current_fruit_location[0]+x,
-                           self.training_fruit_system.current_fruit_location[1]+y] = FRUIT_COLOR
-        for body_part in self.training_body.body_parts:
-            for x in range(1, BODY_PART_SIZE-1):
-                for y in range(1, BODY_PART_SIZE-1):
-                    pixels[body_part[0]+x, body_part[1]+y] = BODY_COLOR
-        head = self.training_body.body_parts[-1]
-        for x in range(1, BODY_PART_SIZE-1):
-                for y in range(1, BODY_PART_SIZE-1):
-                    pixels[head[0]+x, head[1]+y] = HEAD_COLOR
-        pixels.close()
-        pg.display.update()
+        # WIN.fill(BACKGROUND_COLOR)
+        # pixels = pg.PixelArray(WIN)
+        # if (self.training_fruit_system.fruit_exists):
+        #     for x in range(1, BODY_PART_SIZE-1):
+        #         for y in range(1, BODY_PART_SIZE-1):
+        #             pixels[self.training_fruit_system.current_fruit_location[0]+x,
+        #                    self.training_fruit_system.current_fruit_location[1]+y] = FRUIT_COLOR
+        # for body_part in self.training_body.body_parts:
+        #     for x in range(1, BODY_PART_SIZE-1):
+        #         for y in range(1, BODY_PART_SIZE-1):
+        #             pixels[body_part[0]+x, body_part[1]+y] = BODY_COLOR
+        # head = self.training_body.body_parts[-1]
+        # for x in range(1, BODY_PART_SIZE-1):
+        #         for y in range(1, BODY_PART_SIZE-1):
+        #             pixels[head[0]+x, head[1]+y] = HEAD_COLOR
+        # pixels.close()
+        # pg.display.update()
+        print(self.get_state())
 
 
     def close(self):
